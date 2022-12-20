@@ -17,7 +17,7 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.set("trust proxy", 1);
-app.use(express.static(path.resolve(__dirname, "client-react-app")));
+app.use(express.static(path.resolve(__dirname, "./client-react-app/build")));
 app.use(express.json());
 app.use(helmet());
 app.use(xss());
@@ -29,7 +29,9 @@ app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.get("*", (req, res) => {
   res
     .status(200)
-    .sendFile(path.resolve(__dirname, "client-react-app", "index.html"));
+    .sendFile(
+      path.resolve(__dirname, "./client-react-app/build", "index.html"),
+    );
 });
 
 app.use(notFoundMiddleware);
